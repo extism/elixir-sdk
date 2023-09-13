@@ -3,7 +3,7 @@ defmodule ExtismTest do
   doctest Extism
 
   defp new_plugin() do
-    path = Path.join([__DIR__, "../../wasm/code.wasm"])
+    path = Path.join([__DIR__, "../wasm/count-vowels.wasm"])
     manifest = %{wasm: [%{path: path}]}
     {:ok, plugin} = Extism.Plugin.new(manifest, false)
     plugin
