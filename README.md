@@ -2,6 +2,8 @@
 
 Extism Host SDK for Elixir and Erlang
 
+> **Note**: This is an early release for 1.0 and is not yet ready. Use a 0.x release from the extism/extism repo for now.
+
 ## Docs
 
 Read the [docs on hexdocs.pm](https://hexdocs.pm/extism/).
