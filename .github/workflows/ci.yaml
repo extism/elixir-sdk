@@ -26,14 +26,12 @@ jobs:
         with:
           toolchain: stable
       - name: Setup Elixir Host SDK
-        if: ${{ runner.os != 'macOS' }}
         uses: erlef/setup-beam@v1
         with:
           experimental-otp: true
           otp-version: '25.0.4'
           elixir-version: '1.14.0'
       - name: Test Elixir Host SDK
-        if: ${{ runner.os != 'macOS' }}
         run: |
          LD_LIBRARY_PATH=/usr/local/lib make test
 
