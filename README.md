@@ -10,7 +10,7 @@ Read the [docs on hexdocs.pm](https://hexdocs.pm/extism/).
 
 ## Installation
 
-You can find this package on [hex.pm](https://hex.pm/packages/extism).
+You can find this package on hex.pm [![hex.pm](https://img.shields.io/hexpm/v/extism.svg)](https://hex.pm/packages/extism).
 
 ```elixir
 def deps do
