@@ -24,7 +24,7 @@ end
 
 ## Getting Started
 
-This guide should walk you through some of the concepts in Extism and this ruby library.
+This guide should walk you through some of the concepts in Extism and this Elixir library.
 
 > *Note*: You should be able to follow this guide by copy pasting the code into `iex` using `iex -S mix`.
 
@@ -40,13 +40,13 @@ manifest = %{wasm: [%{url: url}]}
 {:ok, plugin} = Extism.Plugin.new(manifest, false)
 ```
 
-> **Note**: See [the Manifest docs](https://extism.github.io/ruby-sdk/Extism/Manifest.html) as it has a rich schema and a lot of options.
+> **Note**: See [the Manifest docs](https://extism.org/docs/concepts/manifest) as it has a rich schema and a lot of options.
 
 ### Calling A Plug-in's Exports
 
 This plug-in was written in Rust and it does one thing, it counts vowels in a string. As such, it exposes one "export" function: `count_vowels`. We can call exports using [Extism.Plugin#call/3](https://hexdocs.pm/extism/Extism.Plugin.html#call/3):
 
-```ruby
+```elixir
 {:ok, output} = Extism.Plugin.call(plugin, "count_vowels", "Hello, World!")
 # => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
 ```
@@ -57,7 +57,7 @@ All exports have a simple interface of bytes-in and bytes-out. This plug-in happ
 
 Plug-ins may be stateful or stateless. Plug-ins can maintain state b/w calls by the use of variables. Our count vowels plug-in remembers the total number of vowels it's ever counted in the "total" key in the result. You can see this by making subsequent calls to the export:
 
-```ruby
+```elixir
 {:ok, output} = Extism.Plugin.call(plugin, "count_vowels", "Hello, World!")
 # => {"count": 3, "total": 6, "vowels": "aeiouAEIOU"}
 {:ok, output} = Extism.Plugin.call(plugin, "count_vowels", "Hello, World!")
@@ -72,7 +72,7 @@ These variables will persist until this plug-in is freed or you initialize a new
 
 Plug-ins may optionally take a configuration object. This is a static way to configure the plug-in. Our count-vowels plugin takes an optional configuration to change out which characters are considered vowels. Example:
 
-```ruby
+```elixir
 {:ok, output} = Extism.Plugin.call(plugin, "count_vowels", "Yellow, World!")
 # => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
 
