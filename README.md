@@ -20,7 +20,7 @@ def deps do
 end
 ```
 
-> **Note**: You'll need a rust toolchain installed to build this package. See [Install Rust](https://www.rust-lang.org/tools/install) to install for your platform.
+> **Note**: You do not need to install the Extism Runtime shared object, but you will need a rust toolchain installed to build this package. See [Install Rust](https://www.rust-lang.org/tools/install) to install for your platform.
 
 ## Getting Started
 
