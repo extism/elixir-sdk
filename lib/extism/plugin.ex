@@ -15,6 +15,15 @@ defmodule Extism.Plugin do
 
   @doc """
   Creates a new plugin
+
+  ## Parameters
+
+    - manifest: The manifest as a map https://extism.org/docs/concepts/manifest/
+    - wasi: Use true to enable WASI. Defaults to false.
+
+  ## Returns
+
+    A result tuple with the plugin or an error
   """
   def new(manifest, wasi \\ false) do
     {:ok, manifest_payload} = JSON.encode(manifest)
