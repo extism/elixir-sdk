@@ -10,7 +10,7 @@ Read the [docs on hexdocs.pm](https://hexdocs.pm/extism/).
 
 ## Installation
 
-You can find this package on [hex.pm](https://hex.pm/packages/extism).
+You can find this package on hex.pm [![hex.pm](https://img.shields.io/hexpm/v/extism.svg)](https://hex.pm/packages/extism)
 
 ```elixir
 def deps do
@@ -20,37 +20,69 @@ def deps do
 end
 ```
 
+> **Note**: You do not need to install the Extism Runtime shared object, but you will need a rust toolchain installed to build this package. See [Install Rust](https://www.rust-lang.org/tools/install) to install for your platform.
+
 ## Getting Started
 
-### Example
+This guide should walk you through some of the concepts in Extism and this Elixir library.
+
+> *Note*: You should be able to follow this guide by copy pasting the code into `iex` using `iex -S mix`.
+
+### Creating A Plug-in
+
+The primary concept in Extism is the [plug-in](https://extism.org/docs/concepts/plug-in). You can think of a plug-in as a code module stored in a `.wasm` file.
+
+Since you may not have an Extism plug-in on hand to test, let's load a demo plug-in from the web:
 
 ```elixir
-# point to some wasm code, this is the count_vowels example that ships with extism
-manifest = %{ wasm: [ %{ url: "https://raw.githubusercontent.com/extism/extism/main/wasm/code.wasm" } ]}
+url = "https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm"
+manifest = %{wasm: [%{url: url}]}
 {:ok, plugin} = Extism.Plugin.new(manifest, false)
-# {:ok,
-# %Extism.Plugin{
-#   resource: 0,
-#   reference: #Reference<0.520418104.1263009793.80956>
-# }}
-{:ok, output} = Extism.Plugin.call(plugin, "count_vowels", "this is a test")
-# {:ok, "{\"count\": 4}"}
-{:ok, result} = JSON.decode(output)
-# {:ok, %{"count" => 4}}
 ```
 
-### Modules
+> **Note**: See [the Manifest docs](https://extism.org/docs/concepts/manifest) as it has a rich schema and a lot of options.
 
-The primary modules you should learn is:
+### Calling A Plug-in's Exports
 
-* [Extism.Plugin](Extism.Plugin.html)
-
-#### Plugin
-
-The [Plugin](Extism.Plugin.html) represents an instance of your WASM program from the given manifest.
-The key method to know here is [Extism.Plugin#call](Extism.Plugin.html#call/3) which takes a function name to invoke and some input data, and returns the results from the plugin.
+This plug-in was written in Rust and it does one thing, it counts vowels in a string. As such, it exposes one "export" function: `count_vowels`. We can call exports using [Extism.Plugin#call/3](https://hexdocs.pm/extism/Extism.Plugin.html#call/3):
 
 ```elixir
-{:ok, plugin} = Extism.Plugin.new(manifest, false)
-{:ok, output} = Extism.Plugin.call(plugin, "count_vowels", "this is a test")
+{:ok, output} = Extism.Plugin.call(plugin, "count_vowels", "Hello, World!")
+# => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
 ```
+
+All exports have a simple interface of bytes-in and bytes-out. This plug-in happens to take a string and return a JSON encoded string with a report of results.
+
+### Plug-in State
+
+Plug-ins may be stateful or stateless. Plug-ins can maintain state b/w calls by the use of variables. Our count vowels plug-in remembers the total number of vowels it's ever counted in the "total" key in the result. You can see this by making subsequent calls to the export:
+
+```elixir
+{:ok, output} = Extism.Plugin.call(plugin, "count_vowels", "Hello, World!")
+# => {"count": 3, "total": 6, "vowels": "aeiouAEIOU"}
+{:ok, output} = Extism.Plugin.call(plugin, "count_vowels", "Hello, World!")
+# => {"count": 3, "total": 9, "vowels": "aeiouAEIOU"}
+```
+
+These variables will persist until this plug-in is freed or you initialize a new one.
+
+### Configuration
+
+> TODO: Implement config
+
+Plug-ins may optionally take a configuration object. This is a static way to configure the plug-in. Our count-vowels plugin takes an optional configuration to change out which characters are considered vowels. Example:
+
+```elixir
+{:ok, output} = Extism.Plugin.call(plugin, "count_vowels", "Yellow, World!")
+# => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
+
+{:ok, plugin} = Extism.Plugin.new(manifest, false, %{"vowels": "aeiouyAEIOUY"})
+{:ok, output} = Extism.Plugin.call(plugin, "count_vowels", "Yellow, World!")
+plugin.call("count_vowels", "Yellow, World!")
+# => {"count": 4, "total": 4, "vowels": "aeiouAEIOUY"}
+```
+
+### Host Functions
+
+We don't offer host function support in this library yet. If it is something you need, please [file an issue](https://github.com/extism/elixir-sdk/issues/new)!
+
