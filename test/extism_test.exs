@@ -54,4 +54,13 @@ defmodule ExtismTest do
     assert Extism.Plugin.has_function(plugin, "count_vowels")
     assert !Extism.Plugin.has_function(plugin, "unknown")
   end
+
+  test "handles error on call" do
+    path = Path.join([__DIR__, "../wasm/json-plugin.wasm"])
+    manifest = %{wasm: [%{path: path}]}
+    {:ok, plugin} = Extism.Plugin.new(manifest, true)
+    result = Extism.Plugin.call(plugin, "foo", "hot {garbage}aaaa")
+    assert {:error, err_msg} = result
+    assert err_msg =~ ~r/Uncaught/
+  end
 end
