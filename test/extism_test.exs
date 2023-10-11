@@ -61,6 +61,6 @@ defmodule ExtismTest do
     {:ok, plugin} = Extism.Plugin.new(manifest, true)
     result = Extism.Plugin.call(plugin, "foo", "hot {garbage}aaaa")
     assert {:error, err_msg} = result
-    assert err_msg =~ ~r/Uncaught/
+    assert err_msg =~ ~r/Uncaught SyntaxError/
   end
 end
