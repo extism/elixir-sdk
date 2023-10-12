@@ -14,5 +14,5 @@ crate-type = ["cdylib"]
 
 [dependencies]
 rustler = "0.28.0"
-extism = { git = "https://github.com/extism/extism", branch = "runtime-error-handling" }
+extism = { git = "https://github.com/extism/extism" }
 log = "0.4"
