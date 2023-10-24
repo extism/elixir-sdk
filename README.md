@@ -1,8 +1,8 @@
 # Extism
 
-Extism Host SDK for Elixir and Erlang
+Extism Host SDK for Elixir
 
-> **Note**: This is an early release for 1.0 and is not yet ready. Use a 0.x release from the [extism/extism](https://github.com/extism/extism/tree/main/elixir) repo for now.
+> *Note*: This houses the 1.0 pre-release version of the Elixir SDK. We may push breaking changes in new versions until will hit 1.0 in December, 2023. But it's currently the best place to start a new integration and we welcome any feedback.
 
 ## Docs
 
