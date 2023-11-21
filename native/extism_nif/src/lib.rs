@@ -45,13 +45,13 @@ fn plugin_new_with_manifest(
     manifest_payload: String,
     wasi: bool,
 ) -> Result<ResourceArc<ExtismPlugin>, rustler::Error> {
-    let result = match Plugin::new(manifest_payload, [], wasi) {
+    let manifest_bytes = manifest_payload.as_bytes();
+    match Plugin::new(manifest_bytes, [], wasi) {
         Err(e) => Err(to_rustler_error(e)),
         Ok(plugin) => Ok(ResourceArc::new(ExtismPlugin {
             plugin: RwLock::new(Some(plugin)),
         })),
-    };
-    result
+    }
 }
 
 #[rustler::nif]

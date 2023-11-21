@@ -13,6 +13,6 @@ crate-type = ["cdylib"]
 [workspace]
 
 [dependencies]
-rustler = "0.28.0"
-extism = { git = "https://github.com/extism/extism" }
+rustler = "0.30.0"
+extism = "1.0.0-rc2"
 log = "0.4"
