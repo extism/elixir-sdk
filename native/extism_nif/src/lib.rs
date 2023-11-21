@@ -1,8 +1,6 @@
 use extism::Plugin;
-use rustler::{Atom, Env, ResourceArc, Term};
-use std::path::Path;
+use rustler::{Env, ResourceArc, Term};
 use std::str;
-use std::str::FromStr;
 use std::sync::RwLock;
 
 mod atoms {
@@ -106,22 +104,15 @@ fn plugin_free(plugin: ResourceArc<ExtismPlugin>) -> Result<(), rustler::Error> 
     Ok(())
 }
 
-#[rustler::nif]
-fn set_log_file(filename: String, log_level: String) -> Result<Atom, rustler::Error> {
-    let path = Path::new(&filename);
-    match log::Level::from_str(&log_level) {
-        Err(_e) => Err(rustler::Error::Term(Box::new(format!(
-            "{} not a valid log level",
-            log_level
-        )))),
-        Ok(level) => match extism::set_log_file(path, level) {
-            Ok(()) => Ok(atoms::ok()),
-            Err(e) => Err(rustler::Error::Term(Box::new(format!(
-                "Did not set log file: {e:?}"
-            )))),
-        },
-    }
-}
+// #[rustler::nif]
+// fn set_log_file(file: String, log_level: String) -> Result<Atom, rustler::Error> {
+//     match extism::set_log_callback(logger, log_level) {
+//         Ok(()) => Ok(atoms::ok()),
+//         Err(e) => Err(rustler::Error::Term(Box::new(format!(
+//             "Did not set custom logger: {e:?}"
+//         )))),
+//     }
+// }
 
 #[rustler::nif]
 fn plugin_has_function(
@@ -146,7 +137,7 @@ rustler::init!(
         plugin_cancel_handle,
         plugin_cancel,
         plugin_free,
-        set_log_file,
+        //set_log_file,
     ],
     load = load
 );

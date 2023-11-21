@@ -45,9 +45,9 @@ defmodule ExtismTest do
     {:error, _msg} = Extism.Plugin.call(plugin, "unknown", "this is a test")
   end
 
-  test "set_log_file" do
-    Extism.set_log_file("/tmp/logfile.log", "debug")
-  end
+  # test "set_log_file" do
+  #   Extism.set_log_file("/tmp/logfile.log", "debug")
+  # end
 
   test "has_function" do
     plugin = new_plugin()
