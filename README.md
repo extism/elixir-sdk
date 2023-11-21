@@ -15,7 +15,7 @@ You can find this package on hex.pm [![hex.pm](https://img.shields.io/hexpm/v/ex
 ```elixir
 def deps do
   [
-    {:extism, "1.0.0-rc1"}
+    {:extism, "1.0.0-rc2"}
   ]
 end
 ```

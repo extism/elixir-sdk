@@ -25,3 +25,6 @@ docs:
 
 show-docs: docs
 	open doc/index.html
+
+seed:
+	curl -L https://github.com/extism/plugins/releases/latest/download/count_vowels.debug.wasm > wasm/count-vowels.wasm
