@@ -14,5 +14,5 @@ crate-type = ["cdylib"]
 
 [dependencies]
 rustler = "0.30.0"
-extism = "1.0.0-rc3"
+extism = "1.0.0"
 log = "0.4"

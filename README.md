@@ -2,8 +2,6 @@
 
 Extism Host SDK for Elixir
 
-> *Note*: This houses the 1.0 pre-release version of the Elixir SDK. We may push breaking changes in new versions until will hit 1.0 in December, 2023. But it's currently the best place to start a new integration and we welcome any feedback.
-
 ## Docs
 
 Read the [docs on hexdocs.pm](https://hexdocs.pm/extism/).
@@ -15,7 +13,7 @@ You can find this package on hex.pm [![hex.pm](https://img.shields.io/hexpm/v/ex
 ```elixir
 def deps do
   [
-    {:extism, "1.0.0-rc2"}
+    {:extism, "1.0.0"}
   ]
 end
 ```
