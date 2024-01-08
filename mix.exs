@@ -4,7 +4,7 @@ defmodule Extism.MixProject do
   def project do
     [
       app: :extism,
-      version: "1.0.0-rc2",
+      version: "1.0.0",
       elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -23,7 +23,7 @@ defmodule Extism.MixProject do
 
   defp deps do
     [
-      {:rustler, "~> 0.29.1"},
+      {:rustler, "~> 0.29"},
       {:json, "~> 1.4"},
       {:ex_doc, "~> 0.21", only: :dev, runtime: false}
     ]
